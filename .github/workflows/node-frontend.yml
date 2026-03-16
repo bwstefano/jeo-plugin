@@ -1,0 +1,33 @@
+name: Node Frontend Checks
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  node-frontend:
+    name: Node 20 frontend checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Show Node and npm versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test:unit

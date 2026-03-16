@@ -19,12 +19,16 @@ Compatibility snapshot validated on March 13, 2026:
 
 Automation:
 
+- Frontend asset checks run in `.github/workflows/node-frontend.yml`.
 - Static PHP checks run in `.github/workflows/php-compat.yml`.
 - WordPress runtime smoke tests run in `.github/workflows/wordpress-smoke.yml`.
 
 Local commands:
 
 ```bash
+npm ci
+npm run build
+npm run test:unit
 php scripts/check-php-compat.php
 WP_CLI_PHP=/opt/homebrew/opt/php@8.4/bin/php \
 WP_DB_HOST=localhost \
@@ -34,6 +38,8 @@ WP_DB_PASSWORD='' \
 WP_VERSION=7.0-beta4 \
 bash scripts/wordpress-smoke.sh
 ```
+
+`scripts/wordpress-smoke.sh` honors `WP_CLI_PHP`, which is useful on Homebrew installs where `/opt/homebrew/bin/wp` otherwise follows the default `php` in `PATH`.
 
 ## Setting up local environment
 
